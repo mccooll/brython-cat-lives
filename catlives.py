@@ -1,11 +1,6 @@
 import random
-from flask import Flask
-from flask import render_template
-from flask import session,json
-from flask import request
-app = Flask(__name__)
-app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
+catlives = Catlives();
 @app.route('/')
 def index():
     letter = request.args.get('guess')
@@ -18,39 +13,23 @@ def index():
     #return catlives.serialize()
     return render_template('catlives.html',letters=catlives.answer, guessedLetters=' '.join(catlives.guessedLetters), alreadyGuessed=catlives.alreadyGuessed, guesses=catlives.numberOfGuesses, win=catlives.hasWon, loss=catlives.hasLost, word=catlives.word)
 
-@app.route('/rs')
-def reset():
-    session.clear()
-    return "session reset"
-
 class Catlives:
 
-    def __init__(self,data=None):
-        if data is None:
-            self.guessedLetters = []
-            self.word = self.selectWord()
-            self.wordLetters = list(self.word)
-            self.wordLettersRemaining = list(set(self.wordLetters))
-            self.answer = [''] * len(self.wordLetters)
-            self.numberOfGuesses = 9
-            self.alreadyGuessed = False  
-            self.hasWon = False
-            self.hasLost = False
-        else:
-            self.unserialize(data)
+    def __init__(self):
+        self.guessedLetters = []
+        self.word = self.selectWord()
+        self.wordLetters = list(self.word)
+        self.wordLettersRemaining = list(set(self.wordLetters))
+        self.answer = [''] * len(self.wordLetters)
+        self.numberOfGuesses = 9
+        self.alreadyGuessed = False
+        self.hasWon = False
+        self.hasLost = False
 
     def loadDictionary(self):
         with open('big_dict.txt') as dictionary:
             words = dictionary.read().split()
         return words
-
-    def serialize(self):
-        return json.dumps(self.__dict__)
-
-    def unserialize(self,data):
-        data = json.loads(data)
-        for key, value in data.items():
-            setattr(self,key,value)
 
     def selectWord(self):
         words = self.loadDictionary()
@@ -69,10 +48,10 @@ class Catlives:
 
     def checkIfGuessed(self,input):
         for guessedLetter in self.guessedLetters:
-            if input == guessedLetter: 
-                return True 
-            
-    def checkIfCorrect(self,input): 
+            if input == guessedLetter:
+                return True
+
+    def checkIfCorrect(self,input):
         isCorrect = False
         if input in self.wordLetters:
             self.wordLettersRemaining.remove(input)
@@ -91,11 +70,10 @@ class Catlives:
     def checkForWin(self):
         if len(self.wordLettersRemaining) == 0:
             return True
-        
+
     def checkForLoss(self):
         if self.CorrectorIncorrect == False:
             self.numberOfGuesses = self.numberOfGuesses - 1
             if self.numberOfGuesses == 0:
                 return True
             return False
-
