@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<title>Cat Lives minus three</title>
+		<link href="static/catlives.css" rel="stylesheet"/>
+    <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.7.1/brython.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.7.1/brython_stdlib.js"></script>
+	</head>
+	<body onload="brython()">
+    <div id="app" b-include="templates/catlives.html"></div>
+    <script type="text/python">
+      from catlives import Catlives
+      from browser import document, console
+      from browser.template import Template
+
+      catlives = None
+
+      def new():
+        global catlives
+        catlives = Catlives()
+        Template("app").render(letters=catlives.answer, guessedLetters=' '.join(catlives.guessedLetters), alreadyGuessed=catlives.alreadyGuessed, guesses=catlives.numberOfGuesses, win=catlives.hasWon, loss=catlives.hasLost, word=catlives.word)
+
+      new()
+
+      console.log(catlives.__dict__)
+
+    </script>
+	</body>
+</html>

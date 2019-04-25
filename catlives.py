@@ -1,18 +1,5 @@
 import random
 
-catlives = Catlives();
-@app.route('/')
-def index():
-    letter = request.args.get('guess')
-    if letter and 'catlives' in session:
-        catlives = Catlives(session['catlives'])
-        catlives.guess(letter)
-    else:
-        catlives = Catlives()
-    session['catlives'] = catlives.serialize()
-    #return catlives.serialize()
-    return render_template('catlives.html',letters=catlives.answer, guessedLetters=' '.join(catlives.guessedLetters), alreadyGuessed=catlives.alreadyGuessed, guesses=catlives.numberOfGuesses, win=catlives.hasWon, loss=catlives.hasLost, word=catlives.word)
-
 class Catlives:
 
     def __init__(self):

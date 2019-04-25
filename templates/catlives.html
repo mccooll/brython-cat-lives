@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<title>Cat Lives minus three</title>
-		<link href="static/catlives.css" rel="stylesheet"/>
+		<link href="../static/catlives.css" rel="stylesheet"/>
 	</head>
 	<body>
 		<div class="win" b-code="if win == True">
@@ -42,8 +42,8 @@
 		</pre>
 		<p><form action="/"><button>New Game</button></form></p>
 		</div>
-		<div class="loss" b-code="loss == True">
-			<p>The Red Baron got you this time... Try again! The word was {{ word }}.</p>
+		<div class="loss" b-code="if loss == True">
+			<p>The Red Baron got you this time... Try again! The word was { word }.</p>
 		<pre>
                   XXXX
                  X    XX
@@ -100,12 +100,12 @@
 			<div class='blank' b-code="for letter in letters">{ letter }</div>
 		</div>
 		<p><form action="/"><input name="guess" type='text' maxlength='1' autofocus required><button type="submit">Guess!</button>
-		<span b-code="alreadyGuessed == True">Oops! You guessed this letter already!</form></p>
+		<span b-code="if alreadyGuessed == True">Oops! You guessed this letter already!</form></p>
 		<div>
 			<p b-code="if guessedLetters">Guessed Letters: {{ guessedLetters }}</p>
-			<p b-code="if !guessedLetters">Please guess a letter!</p>
+			<p b-code="if not guessedLetters">Please guess a letter!</p>
 		</div>
-		<p><form action="/"><button>New Game</button></form></p>
+		<p><form action="/"><button b-on="click:new">New Game</button></form></p>
 	</body>
 </html>
 
