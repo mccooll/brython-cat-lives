@@ -4,8 +4,7 @@
 		<link href="static/catlives.css" rel="stylesheet"/>
 	</head>
 	<body>
-		{% if win == True %}
-		<div class="win">
+		<div class="win" b-code="if win == True">
 		<p>You won! You smart cookie, you.</p>
 		<pre>
                    _  .-.
@@ -39,13 +38,11 @@
              '--''"`` \.-'\ >"--._   `-|. `-`/
         ____________.-f._.;"'--. _).--'__ | \
     '''""""''''    (___<7/_______)(/_/`r `   `"-.mx___
-     Schulz                          `'------'--`  -- 
+     Schulz                          `'------'--`  --
 		</pre>
 		<p><form action="/"><button>New Game</button></form></p>
 		</div>
-		{% endif %}
-		{% if loss == True %}
-		<div class="loss">
+		<div class="loss" b-code="loss == True">
 			<p>The Red Baron got you this time... Try again! The word was {{ word }}.</p>
 		<pre>
                   XXXX
@@ -97,22 +94,16 @@
 		</pre>
 		<p><form action="/"><button>New Game</button></form></p>
 		</div>
-		{% endif %}
-		<p>Number of lives:</p><p>{{ guesses }}</p>
+		<p>Number of lives:</p><p>{ guesses }</p>
 		<p>Fill in the blanks:</p>
 		<div>
-			{% for letter in letters %}
-			<div class='blank'>{{ letter }}</div>
-			{% endfor %}
+			<div class='blank' b-code="for letter in letters">{ letter }</div>
 		</div>
-		<p><form action="/"><input name="guess" type='text' maxlength='1' autofocus required><button type="submit">Guess!</button> 
-		{% if alreadyGuessed == True %} Oops! You guessed this letter already! {% endif %}</form></p>
+		<p><form action="/"><input name="guess" type='text' maxlength='1' autofocus required><button type="submit">Guess!</button>
+		<span b-code="alreadyGuessed == True">Oops! You guessed this letter already!</form></p>
 		<div>
-			{% if guessedLetters %}
-			<p>Guessed Letters: {{ guessedLetters }}</p>
-			{% else %}
-			<p>Please guess a letter!</p>
-			{% endif %}
+			<p b-code="if guessedLetters">Guessed Letters: {{ guessedLetters }}</p>
+			<p b-code="if !guessedLetters">Please guess a letter!</p>
 		</div>
 		<p><form action="/"><button>New Game</button></form></p>
 	</body>
