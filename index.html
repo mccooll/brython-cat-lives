@@ -8,10 +8,10 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.7.1/brython_stdlib.js"></script>
 	</head>
 	<body onload="brython()">
-    <div id="app" b-include="templates/catlives.html"></div>
+    <div class="appTemplate" b-include="templates/catlives.html"></div>
     <script type="text/python">
       from catlives import Catlives
-      from browser import document, console
+      from browser import document
       from browser.template import Template
 
       catlives = None
@@ -19,11 +19,34 @@
       def new():
         global catlives
         catlives = Catlives()
+        render()
+
+      def render():
+        oldApp = document.select("#app")
+        if len(oldApp) > 0:
+          oldApp = oldApp[0]
+          oldApp.setAttribute("id","appDecay")
+        else:
+          oldApp = None
+        template = document.select(".appTemplate")[0]
+        newApp = template.cloneNode(True)
+        newApp.removeAttribute("class")
+        newApp.setAttribute("id","app")
+        template.parentNode.appendChild(newApp)
         Template("app").render(letters=catlives.answer, guessedLetters=' '.join(catlives.guessedLetters), alreadyGuessed=catlives.alreadyGuessed, guesses=catlives.numberOfGuesses, win=catlives.hasWon, loss=catlives.hasLost, word=catlives.word)
+        if oldApp:
+          oldApp.remove()
+        document.select("#guessButton")[0].bind("click", guess)
+        news = document.select(".new")
+        for newButton in news:
+          newButton.bind("click", new)
+
+      def guess():
+        global catlives
+        catlives.guess(document["guess"].value)
+        render()
 
       new()
-
-      console.log(catlives.__dict__)
 
     </script>
 	</body>

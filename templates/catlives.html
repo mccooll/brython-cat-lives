@@ -40,7 +40,7 @@
     '''""""''''    (___<7/_______)(/_/`r `   `"-.mx___
      Schulz                          `'------'--`  --
 		</pre>
-		<p><form action="/"><button>New Game</button></form></p>
+		<p><button class="new">New Game</button></p>
 		</div>
 		<div class="loss" b-code="if loss == True">
 			<p>The Red Baron got you this time... Try again! The word was { word }.</p>
@@ -92,20 +92,20 @@
 
                        CURSE YOU RED BARON!!
 		</pre>
-		<p><form action="/"><button>New Game</button></form></p>
+		<p><button class="new">New Game</button></p>
 		</div>
 		<p>Number of lives:</p><p>{ guesses }</p>
 		<p>Fill in the blanks:</p>
 		<div>
 			<div class='blank' b-code="for letter in letters">{ letter }</div>
 		</div>
-		<p><form action="/"><input name="guess" type='text' maxlength='1' autofocus required><button type="submit">Guess!</button>
-		<span b-code="if alreadyGuessed == True">Oops! You guessed this letter already!</form></p>
+		<p><input id="guess" name="guess" type='text' maxlength='1' autofocus required><button id="guessButton" type="submit">Guess!</button>
+		<span b-code="if alreadyGuessed == True">Oops! You guessed this letter already!</p>
 		<div>
-			<p b-code="if guessedLetters">Guessed Letters: {{ guessedLetters }}</p>
+			<p b-code="if guessedLetters">Guessed Letters: { guessedLetters }</p>
 			<p b-code="if not guessedLetters">Please guess a letter!</p>
 		</div>
-		<p><form action="/"><button b-on="click:new">New Game</button></form></p>
+		<p><button class="new">New Game</button></p>
 	</body>
 </html>
 
